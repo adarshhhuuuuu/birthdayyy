@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, laasssyyaaawwwww🎀🎀🎀🎀!</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ffebee;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            color: #e91e63;
+        }
+        .message {
+            margin: 20px;
+            text-align: center;
+        }
+        .game {
+            display: flex;
+            flex-wrap: wrap;
+            width: 400px; /* Adjusted width */
+            margin-top: 20px;
+        }
+        .card {
+            width: 100px; /* Increased card size */
+            height: 100px; /* Increased card size */
+            margin: 5px;
+            position: relative;
+            cursor: pointer;
+            perspective: 1000px;
+        }
+        .card .inner {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+        .card.flip .inner {
+            transform: rotateY(180deg);
+        }
+        .card .front,
+        .card .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 10px;
+        }
+        .card .front {
+            background-color: #f1f1f1;
+        }
+        .card .back {
+            background-color: #ffccbc; /* Distinct color for card back */
+            transform: rotateY(180deg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+        }
+        .card .back img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Happy Birthday, laasssyyaaawwwww🎀🎀🎀🎀!</h1>
+    <div class="message">
+        <p>Hey, just wanted to say that you always brighten my day. Whether we’re joking around or just chatting, I feel lucky to have you in my life. You're not just an amazing friend but someone who makes everything a little more special. 😊</p>
+    </div>
+    <div class="game">
+        <!-- Cards will be generated here -->
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cardImages = [
+                'cake.jpg', 'balloon.jpg', 'gift.jpg', 'party.jpg',
+                'cake.jpg', 'balloon.jpg', 'gift.jpg', 'party.jpg'
+            ];
+
+            // Shuffle the images
+            const shuffledImages = cardImages.sort(() => 0.5 - Math.random());
+
+            const gameContainer = document.querySelector('.game');
+            shuffledImages.forEach((image) => {
+                const card = document.createElement('div');
+                card.classList.add('card');
+                card.dataset.image = image;
+                card.innerHTML = `
+                    <div class="inner">
+                        <div class="front"></div>
+                        <div class="back">
+                            <img src="${image}" alt="${image}">
+                        </div>
+                    </div>
+                `;
+                gameContainer.appendChild(card);
+            });
+
+            let hasFlippedCard = false;
+            let firstCard, secondCard;
+
+            function flipCard() {
+                if (this.classList.contains('flip') || hasFlippedCard && secondCard) return;
+
+                this.classList.add('flip');
+
+                if (!hasFlippedCard) {
+                    hasFlippedCard = true;
+                    firstCard = this;
+                } else {
+                    hasFlippedCard = false;
+                    secondCard = this;
+
+                    if (firstCard.dataset.image === secondCard.dataset.image) {
+                        firstCard = null;
+                        secondCard = null;
+                    } else {
+                        setTimeout(() => {
+                            firstCard.classList.remove('flip');
+                            secondCard.classList.remove('flip');
+                            firstCard = null;
+                            secondCard = null;
+                        }, 1000);
+                    }
+                }
+            }
+
+            document.querySelectorAll('.card').forEach(card => {
+                card.addEventListener('click', flipCard);
+            });
+        });
+    </script>
+</body>
+</html>
